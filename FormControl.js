@@ -19,8 +19,7 @@ export default class FormControl {
 
       const numberInstance = new NumberWork(num);
       numberInstance.displayNumber();
-      const sign = numberInstance.posOrneg();
-
+     
       document.getElementById('result').innerHTML = `
         <p>Number: ${num}</p>
              `;
