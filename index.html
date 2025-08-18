@@ -12,11 +12,12 @@
         <nav></nav>
     </header>
     <main id="root">
-    <form>
-         <label for="num1">Enter the number:</label><br>
-        <input type="text" id="number" name="number" value="num1"><br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <form id="myForm" action="" onsubmit="">
+  <label for="number">Enter a number:</label><br>
+  <input type="text" id="number" name="number" placeholder="e.g. 42"><br><br>
+  <input type="submit" value="Calculate">
+</form>
+<div id="result"></div>
     </main>
     <footer></footer>
     <script type="module" src="app.js"></script>
