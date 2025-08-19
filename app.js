@@ -1,4 +1,5 @@
 import FormControl from "./FormControl.js";
+import NumberWork from "./numberWork.js";
 
 const form = document.querySelector("#myForm");
 const numberInput = document.querySelector("#number");
