@@ -1,40 +1,81 @@
 import FormControl from "./FormControl.js";
-import NumberWork from "./numberWork.js";
 
-const form = document.querySelector("#myForm");
-const numberInput = document.querySelector("#number");
-const emailInput = document.querySelector("#email");
-const output = document.querySelector("#output");
+const nameSection = document.querySelector("#nameSection");
+const greetLine = document.querySelector("#greetLine");
+const nameInput = document.getElementById("firstname");
+const saveBtn = document.getElementById("saveBtn");
+const askForm = document.querySelector("#askForm");
+
+// Prefill & greet if name exists
+const savedName = localStorage.getItem("firstname");
+if (savedName) {
+  nameInput.value = savedName;
+  greetLine.textContent = `Hello, ${savedName}`;
+  askForm.classList.remove("d-none"); // show "Would you like to fill a form?"
+  nameSection.classList.add("d-none"); // hide name input + save
+}
+
+// Save name & update greeting
+saveBtn.addEventListener("click", () => {
+  const name = (nameInput.value || "").trim();
+  if (!name) {
+    alert("Please enter your name.");
+    return;
+  }
+  localStorage.setItem("firstname", name);
+  greetLine.textContent = `Hello, ${name}`;
+  askForm.classList.remove("d-none"); // reveal askForm section
+  nameSection.classList.add("d-none"); // hide name input after save
+});
+
+// ===== Yes/No controls =====
+const section = document.querySelector("#formSection");
 const byeMessage = document.querySelector("#byeMessage");
-
 const yesBtn = document.querySelector("#yesBtn");
 const noBtn = document.querySelector("#noBtn");
 
-
 yesBtn.addEventListener("click", () => {
-  form.classList.remove("d-none");
-  byeMessage.classList.add("d-none");
+  section.classList.remove("d-none"); // show heading + form
+  byeMessage.classList.add("d-none"); // hide bye
 });
-
 
 noBtn.addEventListener("click", () => {
-  form.classList.add("d-none");
-  byeMessage.classList.remove("d-none");
+  section.classList.add("d-none"); // hide heading + form
+  byeMessage.classList.remove("d-none"); // show bye
 });
 
+// ===== Form handling =====
+const form = document.querySelector("#userForm");
+const numberInput = document.querySelector("#number");
+const emailInput = document.querySelector("#email");
+const output = document.querySelector("#output");
+const displayBtn = document.querySelector("#displayBtn");
 
+// Submit with validation
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const numEmailChecker = new FormControl(numberInput.value, emailInput.value);
+  const control = new FormControl(
+    numberInput.value.trim(),
+    emailInput.value.trim()
+  );
 
-  if (!numEmailChecker.isValid()) {
+  if (!control.isValid()) {
     output.textContent = "Please enter a valid number and email.";
     output.classList.remove("d-none");
-  } else {
-    output.classList.add("d-none");
-    alert(
-      `Success!\nNumber: ${numEmailChecker.num}\nEmail: ${numEmailChecker.email}`
-    );
+    return;
   }
+
+  output.classList.add("d-none");
+  alert(`Success!\nNumber: ${control.num}\nEmail: ${control.email}`);
+});
+
+// Display current values (no validation)
+displayBtn.addEventListener("click", () => {
+  const num = numberInput.value.trim();
+  const mail = emailInput.value.trim();
+  output.textContent = `Number: ${num || "(empty)"} | Email: ${
+    mail || "(empty)"
+  }`;
+  output.classList.remove("d-none");
 });

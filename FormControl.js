@@ -2,24 +2,18 @@ export default class FormControl {
   constructor(num, email) {
     this.num = num;
     this.email = email;
-    this.getName();
   }
 
-  isNumberValid() {
-    return this.num !== "" && !isNaN(this.num);
+  #validNumber() {
+    if (this.num === "") return false;
+    return !isNaN(Number(this.num));
   }
 
-  isEmailValid() {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(this.email);
+  #validEmail() {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email);
   }
 
   isValid() {
-    return this.isNumberValid() && this.isEmailValid();
-  }
-
- getName() {
-    let name = "Sabelo";
-    localStorage.setItem("firstmane",name);
+    return this.#validNumber() && this.#validEmail();
   }
 }
