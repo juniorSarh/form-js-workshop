@@ -1,28 +1,26 @@
-import NumberWork from "./numberWork.js";
+export default 
+class FormControl {
+    constructor(num1, email) {
+        this.num1 = num1;
+        this.email = email;
+    }
 
-export default class FormControl {
-  constructor() {
-    this.form = document.getElementById('myForm');
-  }
+    submitHandler() {
+        if (this.checkIsNumber(this.num1) || !this.isEmailValid(this.email)) {
+            alert("Error: Invalid number or email.");
+            return false;
+        } else {
+            alert(`Success: number is ${this.num1}, email is ${this.email}`);
+            return true;
+        }
+    }
 
-  submitHandler() {
-    this.form.onsubmit = (event) => {
-      event.preventDefault(); 
+    checkIsNumber(number) {
+        return isNaN(number) || number === '';
+    }
 
-      const input = document.getElementById('number').value;
-      const num = parseFloat(input);
-
-      if (isNaN(num)) {
-        alert("Please enter a valid number.");
-        return;
-      }
-
-      const numberInstance = new NumberWork(num);
-      numberInstance.displayNumber();
-     
-      document.getElementById('result').innerHTML = `
-        <p>Number: ${num}</p>
-             `;
-    };
-  }
+    isEmailValid(email) {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
 }
