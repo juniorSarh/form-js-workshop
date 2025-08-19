@@ -1,29 +1,39 @@
-import NumberWork from "./numberWork.js";
 import FormControl from "./FormControl.js";
 
-const formControll = document.querySelector("#myForm");
-const errorMessage = document.querySelector("#output");
+const form = document.querySelector("#myForm");
+const numberInput = document.querySelector("#number");
+const emailInput = document.querySelector("#email");
+const output = document.querySelector("#output");
+const byeMessage = document.querySelector("#byeMessage");
+
+const yesBtn = document.querySelector("#yesBtn");
+const noBtn = document.querySelector("#noBtn");
 
 
-formControll.onsubmit = (event) => {
-  event.preventDefault();
+yesBtn.addEventListener("click", () => {
+  form.classList.remove("d-none");
+  byeMessage.classList.add("d-none");
+});
 
-  const inputElement = document.querySelector("input[name='number']");
-  let inputValue = inputElement.value.trim();
 
-  const isANumber = !isNaN(inputValue) && inputValue !== '';
+noBtn.addEventListener("click", () => {
+  form.classList.add("d-none");
+  byeMessage.classList.remove("d-none");
+});
 
-  if (!isANumber) {
-    
-    errorMessage.classList.remove("d-none");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const numEmailChecker = new FormControl(numberInput.value, emailInput.value);
+
+  if (!numEmailChecker.isValid()) {
+    output.textContent = "Please enter a valid number and email.";
+    output.classList.remove("d-none");
   } else {
-   
-    errorMessage.classList.add("d-none");
-    
-    alert(`The number is ${inputValue}`)
-    const number = parseFloat(inputValue);
-    console.log("Valid number:", number);
-    console.log(`The email is valid`)
-   
+    output.classList.add("d-none");
+    alert(
+      `Success!\nNumber: ${numEmailChecker.num}\nEmail: ${numEmailChecker.email}`
+    );
   }
-};
+});
