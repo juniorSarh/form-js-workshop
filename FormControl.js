@@ -2,6 +2,7 @@ export default class FormControl {
   constructor(num, email) {
     this.num = num;
     this.email = email;
+    this.getName();
   }
 
   #validNumber() {
@@ -15,5 +16,8 @@ export default class FormControl {
 
   isValid() {
     return this.#validNumber() && this.#validEmail();
+  }
+  getName(){
+    localStorage.setItem("firstname", "sabelo")
   }
 }

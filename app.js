@@ -1,5 +1,6 @@
 import FormControl from "./FormControl.js";
 
+
 const nameSection = document.querySelector("#nameSection");
 const greetLine = document.querySelector("#greetLine");
 const nameInput = document.getElementById("firstname");
@@ -11,10 +12,13 @@ const savedName = localStorage.getItem("firstname");
 if (savedName) {
   nameInput.value = savedName;
   greetLine.textContent = `Hello, ${savedName}`;
-  askForm.classList.remove("d-none"); // show "Would you like to fill a form?"
-  nameSection.classList.add("d-none"); // hide name input + save
+  askForm.classList.remove("d-none"); 
+  nameSection.classList.add("d-none"); 
 }
-
+else{
+  alert('No username Found on the system')
+}
+console.log('passed the condition')
 // Save name & update greeting
 saveBtn.addEventListener("click", () => {
   const name = (nameInput.value || "").trim();
@@ -22,10 +26,12 @@ saveBtn.addEventListener("click", () => {
     alert("Please enter your name.");
     return;
   }
+  else{
   localStorage.setItem("firstname", name);
   greetLine.textContent = `Hello, ${name}`;
-  askForm.classList.remove("d-none"); // reveal askForm section
-  nameSection.classList.add("d-none"); // hide name input after save
+  askForm.classList.remove("d-none"); 
+  nameSection.classList.add("d-none"); 
+}
 });
 
 // ===== Yes/No controls =====
@@ -35,13 +41,13 @@ const yesBtn = document.querySelector("#yesBtn");
 const noBtn = document.querySelector("#noBtn");
 
 yesBtn.addEventListener("click", () => {
-  section.classList.remove("d-none"); // show heading + form
-  byeMessage.classList.add("d-none"); // hide bye
+  section.classList.remove("d-none"); 
+  byeMessage.classList.add("d-none"); 
 });
 
 noBtn.addEventListener("click", () => {
-  section.classList.add("d-none"); // hide heading + form
-  byeMessage.classList.remove("d-none"); // show bye
+  section.classList.add("d-none"); 
+  byeMessage.classList.remove("d-none"); 
 });
 
 // ===== Form handling =====
